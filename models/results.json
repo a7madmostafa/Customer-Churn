@@ -1,0 +1,62 @@
+[
+  {
+    "params": {
+      "model__C": 10.0,
+      "model__class_weight": null,
+      "model__solver": "liblinear"
+    },
+    "mean_test_score": 0.84605487051286,
+    "std_test_score": 0.007697951766481902,
+    "rank_test_score": 1
+  },
+  {
+    "params": {
+      "model__C": 10.0,
+      "model__class_weight": "balanced",
+      "model__solver": "liblinear"
+    },
+    "mean_test_score": 0.8460185303783535,
+    "std_test_score": 0.007684294776580362,
+    "rank_test_score": 2
+  },
+  {
+    "params": {
+      "model__C": 1.0,
+      "model__class_weight": null,
+      "model__solver": "liblinear"
+    },
+    "mean_test_score": 0.8457543823530645,
+    "std_test_score": 0.00747291347710929,
+    "rank_test_score": 3
+  },
+  {
+    "params": {
+      "model__C": 1.0,
+      "model__class_weight": "balanced",
+      "model__solver": "liblinear"
+    },
+    "mean_test_score": 0.8457170311696892,
+    "std_test_score": 0.00754457332441446,
+    "rank_test_score": 4
+  },
+  {
+    "params": {
+      "model__C": 0.1,
+      "model__class_weight": "balanced",
+      "model__solver": "liblinear"
+    },
+    "mean_test_score": 0.8451260809270592,
+    "std_test_score": 0.007429058672139763,
+    "rank_test_score": 5
+  },
+  {
+    "params": {
+      "model__C": 0.1,
+      "model__class_weight": null,
+      "model__solver": "liblinear"
+    },
+    "mean_test_score": 0.8448271254861881,
+    "std_test_score": 0.007070299968607193,
+    "rank_test_score": 6
+  }
+]

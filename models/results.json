@@ -5,8 +5,8 @@
       "model__class_weight": null,
       "model__solver": "liblinear"
     },
-    "mean_test_score": 0.84605487051286,
-    "std_test_score": 0.007697951766481902,
+    "mean_test_score": 0.8460514783943814,
+    "std_test_score": 0.007695273267095791,
     "rank_test_score": 1
   },
   {
@@ -15,8 +15,8 @@
       "model__class_weight": "balanced",
       "model__solver": "liblinear"
     },
-    "mean_test_score": 0.8460185303783535,
-    "std_test_score": 0.007684294776580362,
+    "mean_test_score": 0.8460190154102686,
+    "std_test_score": 0.0076838280548860455,
     "rank_test_score": 2
   },
   {
@@ -35,8 +35,8 @@
       "model__class_weight": "balanced",
       "model__solver": "liblinear"
     },
-    "mean_test_score": 0.8457170311696892,
-    "std_test_score": 0.00754457332441446,
+    "mean_test_score": 0.845717030548704,
+    "std_test_score": 0.007545460047736501,
     "rank_test_score": 4
   },
   {

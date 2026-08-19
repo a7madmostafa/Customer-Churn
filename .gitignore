@@ -1,8 +1,8 @@
 __pycache__/
 *.pyc
 *.pyo
-*.pkl
-models/
+
+
 .env
 *.egg-info/
 dist/

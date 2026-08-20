@@ -22,5 +22,12 @@ services:
     volumes:
       - mlflow-data:/mlruns
 
+  streamlit:
+    build: .
+    ports:
+      - "8501:8501"
+    command: streamlit run streamlit_app.py --server.port 8501 --server.address 0.0.0.0
+    restart: unless-stopped
+
 volumes:
   mlflow-data:

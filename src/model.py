@@ -9,12 +9,27 @@ import numpy as np
 import onnxruntime as ort
 import pandas as pd
 import structlog
-from skl2onnx import convert_sklearn
+from skl2onnx import convert_sklearn, update_registered_converter
 from skl2onnx.common.data_types import FloatTensorType, StringTensorType
+from skl2onnx.common.shape_calculator import calculate_linear_classifier_output_shapes
 from sklearn.compose import ColumnTransformer
 from sklearn.model_selection import StratifiedKFold, cross_val_score
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
+
+try:
+    from xgboost import XGBClassifier
+    from onnxmltools.convert.xgboost.operator_converters.XGBoost import convert_xgboost
+
+    update_registered_converter(
+        XGBClassifier,
+        "XGBoostXGBClassifier",
+        calculate_linear_classifier_output_shapes,
+        convert_xgboost,
+        options={"nocl": [True, False], "zipmap": [True, False, "columns"]},
+    )
+except ImportError:
+    pass
 
 from src.config import RANDOM_STATE, NUM_COLS, CAT_COLS, MODEL_REGISTRY
 

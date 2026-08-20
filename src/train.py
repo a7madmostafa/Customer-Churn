@@ -5,6 +5,7 @@ src/train.py — Orchestrate data prep, training, and evaluation
 import json
 from pathlib import Path
 
+import mlflow
 import optuna
 import structlog
 
@@ -25,6 +26,8 @@ if __name__ == "__main__":
 
     optuna.logging.set_verbosity(optuna.logging.WARNING)
 
+    mlflow.set_experiment("churn_prediction")
+
     X_train, X_test, y_train, y_test = load_splits()
 
     model = ChurnModel()
@@ -40,6 +43,14 @@ if __name__ == "__main__":
 
     model.build_best_model(best_model_name, best_model_params, X_train, y_train)
     model.export_onnx(ONNX_PATH)
+
+    with mlflow.start_run(run_name=best_model_name):
+        mlflow.log_param("model_name", best_model_name)
+        mlflow.log_params(best_model_params)
+        mlflow.log_metric("cv_roc_auc", best.value)
+        mlflow.log_param("n_trials", N_TRIALS)
+        mlflow.log_artifact(str(ONNX_PATH))
+        log.info("mlflow_run_logged", model=best_model_name, cv_roc_auc=f"{best.value:.4f}")
 
     results = {
         "best_model": best_model_name,

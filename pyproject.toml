@@ -11,7 +11,9 @@ dependencies = [
     "uvicorn>=0.29",
     "optuna>=3.6",
     "skl2onnx>=1.16",
+    "onnxmltools>=1.12",
     "onnxruntime>=1.17",
+    "mlflow>=2.12",
 ]
 
 [build-system]

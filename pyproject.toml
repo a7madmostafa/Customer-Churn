@@ -9,6 +9,9 @@ dependencies = [
     "structlog>=24.0",
     "fastapi>=0.110",
     "uvicorn>=0.29",
+    "optuna>=3.6",
+    "skl2onnx>=1.16",
+    "onnxruntime>=1.17",
 ]
 
 [build-system]

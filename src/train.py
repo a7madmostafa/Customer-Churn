@@ -5,32 +5,49 @@ src/train.py — Orchestrate data prep, training, and evaluation
 import json
 from pathlib import Path
 
+import optuna
 import structlog
 
-from src.config import setup_logging, PIPELINE_PATH, RESULTS_PATH, MODEL_CONFIG
+from src.config import setup_logging, ONNX_PATH, RESULTS_PATH, N_TRIALS
 from src.data_prep import load_splits
 from src.model import ChurnModel
 
 log = structlog.get_logger(__name__)
 
 
-def save_results(results: list[dict], path: str | Path) -> None:
-    Path(path).parent.mkdir(parents=True, exist_ok=True)
-    with open(path, "w") as f:
-        json.dump(results, f, indent=2, default=str)
-    log.info("results_saved", path=str(path))
+def objective(trial, X_train, y_train, model):
+    """Optuna objective function — returns CV ROC-AUC score."""
+    return model.train_with_optuna(trial, X_train, y_train)
 
 
 if __name__ == "__main__":
     setup_logging()
 
+    optuna.logging.set_verbosity(optuna.logging.WARNING)
+
     X_train, X_test, y_train, y_test = load_splits()
 
-    model = ChurnModel(
-        estimator=MODEL_CONFIG["estimator"],
-        params=MODEL_CONFIG["params"],
-    )
+    model = ChurnModel()
 
-    results = model.train(X_train, y_train)
-    model.save(PIPELINE_PATH)
-    save_results(results, RESULTS_PATH)
+    study = optuna.create_study(direction="maximize", study_name="churn_prediction")
+    study.optimize(lambda trial: objective(trial, X_train, y_train, model), n_trials=N_TRIALS)
+
+    best = study.best_trial
+    log.info("study_done", best_value=f"{best.value:.4f}", best_params=best.params)
+
+    best_model_name = best.params["model_name"]
+    best_model_params = {k: v for k, v in best.params.items() if k != "model_name"}
+
+    model.build_best_model(best_model_name, best_model_params, X_train, y_train)
+    model.export_onnx(ONNX_PATH)
+
+    results = {
+        "best_model": best_model_name,
+        "best_params": best.params,
+        "best_cv_roc_auc": best.value,
+        "n_trials": N_TRIALS,
+    }
+    Path(RESULTS_PATH).parent.mkdir(parents=True, exist_ok=True)
+    with open(RESULTS_PATH, "w") as f:
+        json.dump(results, f, indent=2, default=str)
+    log.info("results_saved", path=str(RESULTS_PATH))

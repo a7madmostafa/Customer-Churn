@@ -1,62 +1,13 @@
-[
-  {
-    "params": {
-      "model__C": 10.0,
-      "model__class_weight": null,
-      "model__solver": "liblinear"
-    },
-    "mean_test_score": 0.8460514783943814,
-    "std_test_score": 0.007695273267095791,
-    "rank_test_score": 1
+{
+  "best_model": "random_forest",
+  "best_params": {
+    "model_name": "random_forest",
+    "n_estimators": 275,
+    "max_depth": 11,
+    "min_samples_split": 3,
+    "min_samples_leaf": 9,
+    "class_weight": "balanced"
   },
-  {
-    "params": {
-      "model__C": 10.0,
-      "model__class_weight": "balanced",
-      "model__solver": "liblinear"
-    },
-    "mean_test_score": 0.8460190154102686,
-    "std_test_score": 0.0076838280548860455,
-    "rank_test_score": 2
-  },
-  {
-    "params": {
-      "model__C": 1.0,
-      "model__class_weight": null,
-      "model__solver": "liblinear"
-    },
-    "mean_test_score": 0.8457543823530645,
-    "std_test_score": 0.00747291347710929,
-    "rank_test_score": 3
-  },
-  {
-    "params": {
-      "model__C": 1.0,
-      "model__class_weight": "balanced",
-      "model__solver": "liblinear"
-    },
-    "mean_test_score": 0.845717030548704,
-    "std_test_score": 0.007545460047736501,
-    "rank_test_score": 4
-  },
-  {
-    "params": {
-      "model__C": 0.1,
-      "model__class_weight": "balanced",
-      "model__solver": "liblinear"
-    },
-    "mean_test_score": 0.8451260809270592,
-    "std_test_score": 0.007429058672139763,
-    "rank_test_score": 5
-  },
-  {
-    "params": {
-      "model__C": 0.1,
-      "model__class_weight": null,
-      "model__solver": "liblinear"
-    },
-    "mean_test_score": 0.8448271254861881,
-    "std_test_score": 0.007070299968607193,
-    "rank_test_score": 6
-  }
-]
+  "best_cv_roc_auc": 0.8476270286901816,
+  "n_trials": 50
+}

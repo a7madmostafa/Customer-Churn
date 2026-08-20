@@ -5,8 +5,11 @@ A modular ML pipeline for predicting customer churn in telecommunications, built
 ## Project Structure
 
 ```
-S1_Project/
+customer_churn/
 ├── pyproject.toml              # Dependencies and build config (uv)
+├── Dockerfile                  # Multi-stage Docker build
+├── docker-compose.yml          # Container orchestration
+├── .dockerignore               # Docker build exclusions
 ├── data/
 │   ├── telecom_churn.csv       # Raw dataset (7,043 customers)
 │   ├── train.csv               # Training split (5,634 rows)
@@ -63,6 +66,14 @@ uv run uvicorn src.app:app --port 8000
 ```
 
 Interactive docs at http://localhost:8000/docs
+
+### 6. Docker
+
+```bash
+docker compose up --build
+```
+
+API available at http://localhost:8000. Health check: `GET /health`.
 
 ## API Endpoints
 
@@ -129,3 +140,4 @@ Best model: **LogisticRegression** (C=10.0, liblinear, no class weights)
 - **structlog** — structured JSON logging
 - **pydantic** — request/response validation
 - **uv** — dependency management
+- **Docker** — containerized deployment
